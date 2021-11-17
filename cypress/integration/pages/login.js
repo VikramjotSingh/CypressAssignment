@@ -8,15 +8,17 @@ const loggedInUserName = 'div.header_user_info span'
 
 export class LoginPage{
     
+    //Method to navigate to website.
     navigate(){
       cy.visit('/')
-        //Verify that application logo is displayed.
-           }
+                   }
 
+    //Method to verify that application logo is visible
     isApplicationLogoVisible(){
         cy.get(applicationLogo).should('be.visible')
     }
 
+        //Method to login into application.
     loginToApplication(username, password){
         cy.get(signInButton).click()
 
@@ -34,13 +36,13 @@ export class LoginPage{
           
         }
 
-    //Verify that user is successfully able to login the application.
+    //Method to verify that user is successfully able to login the application.
     isCorrectLoggedInUserNameDisplayed(userName){
     cy.get(loggedInUserName).should('have.text', userName);
     }
 
+    //Method to verify that correct page header is displayed.
     isCorrectPageHeaderDisplayed(pageHeaderName){
-    //Verify that user is navigated to 'My Account' page.
     cy.get(pageHeaderLabel).should('have.text', pageHeaderName);
 }
 
