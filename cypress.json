@@ -2,11 +2,12 @@
     "baseUrl": "http://automationpractice.com/index.php",
     "viewportWidth": 1280,
     "viewportHeight": 720,
-
-    "reporter": "../node_modules/mochawesome/src/mochawesome.js",
+    "reporter": "cypress-mochawesome-reporter",
     "reporterOptions": {
-        "overwrite": false,
-        "html": false,
-        "json": true
+        "reportDir": "cypress/reports",
+        "charts": true,
+        "reportPageTitle": "My Test Suite",
+        "embeddedScreenshots": true,
+        "inlineAssets": true
     }
 }
