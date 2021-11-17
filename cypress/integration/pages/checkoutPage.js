@@ -53,8 +53,8 @@ export class CheckoutPage {
 
     //Method to verify if correct Unit price is diplayed on Shipping page.
     isCorrectUnitPriceOfItemDisplayedOnShippingPage(itemPrice) {
-    cy.get(unitPriceOnShippingPage).should('have.text', itemPrice)
-}
+        cy.get(unitPriceOnShippingPage).should('have.text', itemPrice)
+    }
 
     //Method to verify if correct Item quantity is displayed.
     iscorrectItemQuantityDisplayed(itemQuantity) {
@@ -179,7 +179,10 @@ export class CheckoutPage {
 
     //Verify that correct order reference number is displayed.
     isCorrectOrderReferenceNumberDisplayed(orderNumber) {
-        cy.get(orderReferenceNumber).should('have.text', orderNumber)
+        cy.get(orderReferenceNumber).should(($ele) => {
+            var expectedOrderNumber = $ele.text().trim()
+            expect(orderNumber, expectedOrderNumber)
+        })
     }
 
     //Verify that correct Total Price is displayed
@@ -199,13 +202,27 @@ export class CheckoutPage {
     }
 
     //Verify that correct order completion details are displayed.
-    isCorrectOrderCompletionDetailsAreDisplayed(orderCompletionMessage){
-    cy.get('div.box').should('contain.text', orderCompletionMessage)
+    isCorrectOrderCompletionDetailsAreDisplayed(orderCompletionMessage) {
+        cy.get('div.box').should('contain.text', orderCompletionMessage)
     }
+
+    registerCallbackForOrderReferenceNumber(orderReferenceNumberCallback) {
+        let pattern = "(Do not forget to insert your order reference) ([A-Z]*) (in the subject of your bank wire.)";
+
+        cy.get('div.box').then(($div) => {
+            var divText = $div.text()
+            var code = divText.match(pattern)[2]
+            orderReferenceNumberCallback(code)
+        })
+    }
+
     //Verify that correct order Date is displayed.
-    isCorrectOrderDateDisplayed(){
+    isCorrectOrderDateDisplayed() {
         const dayjs = require('dayjs')
         const todaysDate = dayjs().format('MM/DD/YYYY')
-        cy.get(orderDate).should('contain.text', todaysDate)
+        cy.get(orderDate).should(($tr) => {
+            var date = $tr.text().trim()
+            expect(date, todaysDate)
+        })
     }
-    }
+}

@@ -141,20 +141,22 @@ describe('Test to place the order and to verify that order is placed successfull
                     checkoutPage.isCorrectOrderCompletionDetailsAreDisplayed('Bank name  RTP')
                     checkoutPage.isCorrectOrderCompletionDetailsAreDisplayed('Your order will be sent as soon as we receive payment.')
 
-                    //Click on 'Back to orders' page.
-                    checkoutPage.clickOnBackToOrdersButton()
+                    checkoutPage.registerCallbackForOrderReferenceNumber(
+                        function (orderReferenceNumber) {
 
-                    //Verify that user is on Order History page.
-                    checkoutPage.isCorrectPageHeadingDisplayed('Order history')
+                            //Click on 'Back to orders' page.
+                            checkoutPage.clickOnBackToOrdersButton()
 
-                    //Verify that correct 'Product Details'are displayed.
-                    // checkoutPage.isCorrectOrderReferenceNumberDisplayed()
-                     checkoutPage.isCorrectOrderDateDisplayed()
-                     checkoutPage.isCorrectTotalPriceDisplayedOnOrderHistoryPage(totalPrice)
+                            //Verify that user is on Order History page.
+                            checkoutPage.isCorrectPageHeadingDisplayed('Order history')
 
-
+                            //Verify that correct 'Product Details'are displayed.
+                            checkoutPage.isCorrectOrderReferenceNumberDisplayed(orderReferenceNumber)
+                            checkoutPage.isCorrectOrderDateDisplayed()
+                            checkoutPage.isCorrectTotalPriceDisplayedOnOrderHistoryPage(totalPrice)
+                        }
+                    )
                 }
             )
-
         })
 })
